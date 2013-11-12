@@ -1,0 +1,12 @@
+Learn You a Haskell for Great Good.pdf
+*.hs~
+*.hs#
+*.md~
+dist
+cabal-dev
+*.o
+*.hi
+*.chi
+*.chs.h
+.virthualenv
+irclog/irclog
