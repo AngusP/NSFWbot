@@ -37,7 +37,7 @@ channel  = "#compsoc"
 realname = "Sirius"
 pass     = "lambdalove"
 ircLog   = "/home/anguspearson/Haskell/ircbot/" ++ server ++ "."++ channel ++".log"
--- Thsi log needs to already exist ^
+-- This log needs to already exist ^
 
 
 -- MAIN PROGRAM LOOP: -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- -- --
@@ -203,13 +203,14 @@ rfcToEntry :: String -> String -> Maybe Entry
 rfcToEntry t str
   | " PRIVMSG" `isPrefixOf` (dropWhile (/=' ') str) && ":ACTION" `isPrefixOf` (dropWhile (/=':') $ dropWhile (/=' ') str)
                                                     = Just ( t , takeWhile (/='!') $ drop 1 str , 
-                                                      (takeWhile (/='!') $ drop 1 str) ++ (dropWhile (/=' ') $ tail $ dropWhile (/=':') $ tail str) )
-  | " PRIVMSG" `isPrefixOf` (dropWhile (/=' ') str) = Just ( t , takeWhile (/='!') $ drop 1 str , tail $ dropWhile (/=':') $ tail str )
+      (takeWhile (/='!') $ drop 1 str) ++ (dropWhile (/=' ') $ dropWhile (/=':') $ tail $ dropWhile (/=' ') $ tail str) )
+  | " PRIVMSG" `isPrefixOf` (dropWhile (/=' ') str) = Just ( t , takeWhile (/='!') $ drop 1 str , 
+                                                      tail $ dropWhile (/=':') $ dropWhile (/=' ') $ tail str )
   | " PART" `isPrefixOf`    (dropWhile (/=' ') str) = Just ( t , takeWhile (/='!') $ drop 1 str , "$left" )
   | " QUIT" `isPrefixOf`    (dropWhile (/=' ') str) = Just ( t , takeWhile (/='!') $ drop 1 str , "$left" )
   | " JOIN" `isPrefixOf`    (dropWhile (/=' ') str) = Just ( t , takeWhile (/='!') $ drop 1 str , "$joined" )
   | " KICK" `isPrefixOf`    (dropWhile (/=' ') str) = Just ( t , "$kick" , 
-                            (takeWhile (/='!') $ drop 1 str) ++ " kicked " ++ ((splitByDelim " " $ tail str)!!3) )
+      (takeWhile (/='!') $ drop 1 str) ++ " kicked " ++ (last (splitByDelim " " $ takeWhile (/=':') $ dropWhile (/=' ') $ tail str)) )
   | " NICK" `isPrefixOf`    (dropWhile (/=' ') str) = Just ( t , takeWhile (/='!') $ drop 1 str , 
                                                            head $ words $ tail $ dropWhile (/=':') $ tail str )
   | otherwise = Nothing
