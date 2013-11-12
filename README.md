@@ -1,0 +1,4 @@
+NSFWbot
+=======
+
+Haskell IRC Bot
