@@ -366,7 +366,7 @@ table blame = tabulate blame (longest blame)
 showEntry :: Entry -> String
 showEntry (t,n,c) = "\"" ++ t ++ "\", \"" ++ n ++ "\", \"" ++ c ++ "\"\n"
 
--- Convert the Log to JSON:
+-- Convert the Log to CSV:
 toCSV :: Log -> String
 toCSV [] = []
 toCSV ((t,n,c):log) = "\"" ++ t ++ "\",\"" ++ n ++ "\",\"" ++ c ++ "\"\n" ++ toCSV log
